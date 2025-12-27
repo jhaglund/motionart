@@ -13,9 +13,6 @@ import time
 import mouse
 import threading
 
-def moveMouse(x, y):
-    mouse.move(x, y, absolute=True, duration=config['mouse_move_interval'])
-
 # open config
 with open('./config.yml', 'r') as file:
     config = yaml.safe_load(file) 
@@ -44,7 +41,14 @@ x_avg_sum_avg = 1
 y_avg_sum_avg = 1
 x_avg = 1
 y_avg = 1
+vid_x = config['crop_2_x'] - config['crop_1_x']
+vid_y = config['crop_2_y'] - config['crop_1_y']
+ratio_x = config['screen_x'] / vid_x
+ratio_y = config['screen_y'] / vid_y
 threads = []
+
+def moveMouse(x, y):
+    mouse.move( min(x, config['screen_x']), min(y, config['screen_y']), absolute=True, duration=config['mouse_move_interval'] )
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -104,9 +108,9 @@ while cap.isOpened():
     if( (time.time() - cycle_start) > config['mouse_move_interval']):
         print('INTERVAL ' + str(cycle_count) + ' per ' + str(config['mouse_move_interval']) + ' seconds')
         
-        x_avg_sum_avg = int(np.floor(x_avg_sum / cycle_count))
-        y_avg_sum_avg = int(np.floor(y_avg_sum / cycle_count))
-        t = threading.Thread(target=moveMouse, args=(x_avg_sum_avg, y_avg_sum_avg,), )
+        x_avg_sum_avg = np.floor(x_avg_sum / cycle_count)
+        y_avg_sum_avg = np.floor(y_avg_sum / cycle_count)
+        t = threading.Thread(target=moveMouse, args=(int(x_avg_sum_avg * ratio_x), int(y_avg_sum_avg * ratio_y), ), )
         t.start()
         threads.append(t)
         print(x_avg_sum_avg, y_avg_sum_avg)
@@ -117,7 +121,7 @@ while cap.isOpened():
         y_avg_sum = 0
         
     frame_out = cv2.circle(frame_crop, (int(x_avg), int(y_avg)), 4, (255, 0, 0), -1)
-    frame_out = cv2.circle(frame_crop, (x_avg_sum_avg, y_avg_sum_avg), 40, (0, 0, 255), -1)
+    frame_out = cv2.circle(frame_crop, (int(x_avg_sum_avg), int(y_avg_sum_avg)), 40, (0, 0, 255), -1)
     # Display the resulting frame
 
 
