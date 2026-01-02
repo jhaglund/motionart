@@ -1,7 +1,9 @@
 # overhead video is 1280x720
-cap_source: videos/Airplane5.mov
-min_contour_area: 50
-mouse_move_interval: 2.1
+cap_source: /dev/video0
+min_contour_area: 6000
+mouse_move_interval: 1.7
+# recycle_multiplier must be integer 1 or greater
+recycle_multiplier: 10
 win_stride: 4
 padding: 8
 scale: 1.02
@@ -10,5 +12,7 @@ crop_1_x: 280
 crop_1_y: 0
 crop_2_x: 1000
 crop_2_y: 720
+camera_x: 800
+camera_y: 600
 screen_x: 1920
 screen_y: 1080
