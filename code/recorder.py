@@ -33,11 +33,11 @@ print('frame deets', cap.get(cv2.CAP_PROP_FRAME_WIDTH), cap.get(cv2.CAP_PROP_FRA
 
 backSub = cv2.createBackgroundSubtractorMOG2()
 
-filename = '3'+ (str(config['cap_source']) + '-cv3-' + str(config['min_contour_area']) + '.avi').replace('/', '-')
+filename = 'output3'+ (str(config['cap_source']) + '-cv3-' + str(config['min_contour_area']) + '.avi').replace('/', '-')
 print('filename', filename)
 # the output will be written to output-motion.avi
 out = cv2.VideoWriter(
-    './videos/' + filename,
+    './' + filename,
     cv2.VideoWriter_fourcc(*'MJPG'),
     15.,
     (config['camera_x'], config['camera_y']))
