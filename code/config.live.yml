@@ -1,5 +1,6 @@
 # overhead video is 1280x720
-cap_source: /dev/video0
+# cap_source: /dev/video0
+cap_source: 0
 # make this smaller/larger for motion detection
 min_contour_area: 1000
 mouse_move_interval: 1.7
