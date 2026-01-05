@@ -40,7 +40,7 @@ out = cv2.VideoWriter(
     './' + filename,
     cv2.VideoWriter_fourcc(*'MJPG'),
     15.,
-    (config['camera_x'], config['camera_y']))
+    ((config['crop_2_x'] - config['crop_1_x']), (config['crop_2_y'] - config['crop_1_y'])))
 
 
 if not cap.isOpened():
