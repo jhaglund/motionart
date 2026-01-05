@@ -13,8 +13,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import yaml
 import time
-import mouse
+# import mouse
 import threading
+from pynput.mouse import Button, Controller
+
 
 # open config
 with open('./config.live.yml', 'r') as file:
@@ -58,8 +60,13 @@ ratio_x = config['screen_x'] / config['camera_x']
 ratio_y = config['screen_y'] / config['camera_y']
 threads = []
 
+mouse = Controller()
+
+
 def moveMouse(x, y):
-    mouse.move( min(x, config['screen_x']), min(y, config['screen_y']), absolute=True, duration=config['mouse_move_interval']-0.3 )
+    mouse.position = (x, y)
+    # mouse.move( min(x, config['screen_x']), min(y, config['screen_y']), absolute=True, duration=config['mouse_move_interval']-0.3 )
+    
 
 while cap.isOpened():
     ret, frame = cap.read()
